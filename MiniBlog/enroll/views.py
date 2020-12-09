@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
-# from .forms import  SignUpFrom
-from .forms import SignupFrom
+from .forms import SignupFrom,LoginForm
 # Create your views here.
 
 
@@ -22,15 +21,22 @@ def dasboard(request):
 
 
 def user_login(request):
-    return render(request, "enroll/templets/blog/login.html")
+    form = LoginForm
+    return render(request, "enroll/templets/blog/login.html" , {'form':form})
 
 
 def user_signup(request):
-    # form = SignUpFrom()
-    # form = UserCreationForm()
     form = SignupFrom()
+    # form = UserCreationForm()
+    if request.method == "POST":
+        form = SignupFrom(request.POST)
+    if form.is_valid():
+        form.save()
+    else:
+        form = SignupFrom()
     return render(request, "enroll/templets/blog/signup.html", {'form': form})
 
 
 def logout(request):
+   
     return HttpResponseRedirect('/')
