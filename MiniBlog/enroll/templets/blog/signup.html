@@ -1,0 +1,28 @@
+{% extends 'enroll/templets/blog/base.html' %} 
+{% load static %} 
+{% block content %}
+
+<div class="col-sm-10 m-auto">
+  <h3 class="text-light my-3">sign up page</h3>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      {% for fm in form %}
+            {{fm.label_tag}} {{fm}} {{fm.errors | striptags}} 
+
+       {% endfor %}
+    </div>
+    <input class="btn btn-danger" type="submit" value="submit" />
+
+    
+    {% if form.non_field_errors %}
+       {% for  error in form.non_field_errors %}
+        <p>{{error}}</p>
+       {% endfor %}
+    {% endif %}
+      
+  </form>
+</div>
+
+{% endblock content %}
