@@ -3,22 +3,31 @@
 {% block content %}
 
 <div class="col-sm-10 m-auto">
-  <h3 class="text-light my-3">sign up page</h3>
+  <h3 class="text-light my-2">Become an authore</h3>
 
-  <form action="" method="POST">
+
+{% if messages %}
+  {% for message in  messages %} 
+    <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {%endif%}>
+    {{message}}
+    </p>
+  {% endfor %}
+{% endif %}
+  
+  <form action="" method="POST" novalidate>
     {% csrf_token %}
     <div class="form-group">
       {% for fm in form %}
-            {{fm.label_tag}} {{fm}}  <small class="text-warning">{{fm.errors | striptags}} </small> 
+            {{fm.label_tag}} <span>{{fm}}</span>   <small class="text-warning">{{fm.errors | striptags}} </small> <br>
 
        {% endfor %}
     </div>
-    <input class="btn btn-danger" type="submit" value="submit" />
+    <input class="btn btn-danger my-2" type="submit" value="submit" />
 
     
     {% if form.non_field_errors %}
        {% for  error in form.non_field_errors %}
-        <p>{{error}}</p>
+        <p class="my-1">{{error}}</p>
        {% endfor %}
     {% endif %}
       
