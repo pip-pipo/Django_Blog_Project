@@ -22,8 +22,8 @@
 {% block content %}
 
 <div class="col-sm-10  m-auto">
- <h3 class="text-light my-3 mb-5"> Dashboard Page</h3>
- <a href="#" class=" my-4 btn-success btn">Add Post</a>
+ <h3 class="text-light mb-5"> Dashboard Page</h3>
+ <a href="{% url '/addnewpost/' %}" class=" my-2 btn-success btn">Add Post</a>
  {% if post %}
  <table class="table table-striped table-dark">
   <thead class="thead-dark">
@@ -45,10 +45,10 @@
      <td>{{posts.titel}}</td>
      <td>{{posts.desc}}</td>
      <td class="text-center">
-       <a href="#" class="btn btn-warning btn-sm my-2">
+       <a href="{% url '/update_post/' posts.id %}" class="btn btn-warning btn-sm my-2">
          Edit
        </a>
-       <form action="" method="POST" class="d-inline">
+       <form action="{% url '/deletepost/' posts.id %}" method="POST" class="d-inline">
          {% csrf_token %}
          <input type="submit" class="btn btn-danger btn-sm" value="Delete">
        </form>

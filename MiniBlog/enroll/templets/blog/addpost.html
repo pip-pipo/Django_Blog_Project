@@ -3,8 +3,17 @@
 
 {% block content %}
   <div class="col-sm-10">
-    <h3 class="text-white my-5">Dasboarb /  Update Post</h3>
-    
+    <h3 class="text-white mb-2">Dasboarb / addpost Post</h3>
+
+    <form action="" method="POST" novalidate>
+      {% csrf_token %}
+      {{fm.as_p}}
+      <input type="submit" value="Add" class="btn btn-success">
+      <a href="{% url '/dasboard/' %}" class="btn btn-danger">Cancel</a>
+
+
+    </form>
+   
   </div>
 {% endblock content %}
 

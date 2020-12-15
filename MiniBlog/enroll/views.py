@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate
 from django.shortcuts import render, HttpResponseRedirect
 from .models import PostData
-from .forms import SignupFrom, LoginForm
+from .forms import SignupFrom, LoginForm,PostFrom
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 # Create your views here.
@@ -85,7 +85,17 @@ def user_logout(request):
 
 def addnewpost(request):
     if request.user.is_authenticated:
-        return render(request,"enroll/templets/blog/addpost.html")
+        if request.method == "POST":
+            form = PostFrom(request.POST)
+            if form.is_valid():
+                titel = form.cleaned_data['titel']
+                desc = form.cleaned_data['desc']
+                pst = PostFrom(titel=titel,desc=desc)
+                pst.save()
+                form = PostFrom()
+        else:
+            form = PostData()
+        return render(request,"enroll/templets/blog/addpost.html",{'fm':form})
     else:
         return HttpResponseRedirect('/login/')
 
@@ -93,8 +103,16 @@ def addnewpost(request):
 
 # Update post
 
-def updatePost(request):
+def update_post(request,id):
     if request.user.is_authenticated:
         return render(request,"enroll/templets/blog/updatePost.html")
+    else:
+        return HttpResponseRedirect('/login/')
+
+# delete post
+
+def deletepost(request,id):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/dasboard/')
     else:
         return HttpResponseRedirect('/login/')
