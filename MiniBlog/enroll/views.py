@@ -105,6 +105,16 @@ def addnewpost(request):
 
 def update_post(request,id):
     if request.user.is_authenticated:
+        if request.method == "POST":
+            pi = PostData.objects.get(pk=id)
+            form = PostFrom(request.POST,isinstance=pi) 
+            # problem was ininstance pi (__init__() got an unexpected keyword argument 'isinstance')
+            # am was in 2:24m :08s
+            if form.is_valid():
+                form.save()
+        else:
+            pi = PostData.objects.get(pk=id)
+            form = PostFrom(instance=pi)
         return render(request,"enroll/templets/blog/updatePost.html")
     else:
         return HttpResponseRedirect('/login/')
